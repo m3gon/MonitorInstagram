@@ -84,6 +84,9 @@ class MonitorUsersInstagram:
         rs_thread.start()
     def delete_target(self, username):
         self.file_target.remove(username)
+    def save_target(self, username):
+        with open('MonitroUserDone.txt', 'a') as self.save:
+            self.save.write(f'@{username}' + '\n')
     def MonitorUsersInstagramS(self, username):
         try:
             self.req_check_target = self.HTTP.http_request('POST', 'https://www.instagram.com/accounts/web_create_ajax/attempt/', {'Host': 'www.instagram.com', 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)', 'X-Csrftoken': 'missing'}, {'username':username}, {'https': f"http://{random.choice(open('proxies.txt').read().splitlines())}", 'http': f"http://{random.choice(open('proxies.txt').read().splitlines())}", 'socks4': f"http://{random.choice(open('proxies.txt').read().splitlines())}", 'socks5': f"http://{random.choice(open('proxies.txt').read().splitlines())}"})
@@ -94,6 +97,7 @@ class MonitorUsersInstagram:
                 self.successfully +=1
                 print(f"\r[+] Monitor Users Instagram | Attempts {self.attempts:,} | Get {self.successfully} | ERROR {self.error}", end='')
                 self.discord.Send(username)
+                self.save_target(username)
                 self.delete_target(username)
             else:
                 self.error +=1
