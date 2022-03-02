@@ -79,9 +79,6 @@ class MonitorUsersInstagram:
     def thread(self, thread, function):
         for _ in range(thread):
             threading.Thread(target=function).start()
-        rs_thread = threading.Thread(target=self.requestPS)
-        rs_thread.setDaemon(True)
-        rs_thread.start()
     def delete_target(self, username):
         self.file_target.remove(username)
     def save_target(self, username):
