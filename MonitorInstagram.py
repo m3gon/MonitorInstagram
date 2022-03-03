@@ -89,10 +89,10 @@ class MonitorUsersInstagram:
             self.req_check_target = self.HTTP.http_request('POST', 'https://www.instagram.com/accounts/web_create_ajax/attempt/', {'Host': 'www.instagram.com', 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)', 'X-Csrftoken': 'missing'}, {'username':username}, {'https': f"http://{random.choice(open('proxies.txt').read().splitlines())}", 'http': f"http://{random.choice(open('proxies.txt').read().splitlines())}", 'socks4': f"http://{random.choice(open('proxies.txt').read().splitlines())}", 'socks5': f"http://{random.choice(open('proxies.txt').read().splitlines())}"})
             if self.req_check_target.json()['errors']['username'][0]['message'] == "This username isn't available.":
                 self.attempts +=1
-                print(f"\r[+] Monitor Users Instagram | Attempts {self.attempts:,} | Get {self.successfully} | ERROR {self.error}", end='')
+                print(f"\r[+] Monitor Users Instagram | Attempts {self.attempts} | Get {self.successfully} | ERROR {self.error}", end='')
             elif self.req_check_target.json()['errors']['username'][0]['message'] == "This username isn't available. Please try another.":
                 self.successfully +=1
-                print(f"\r[+] Monitor Users Instagram | Attempts {self.attempts:,} | Get {self.successfully} | ERROR {self.error}", end='')
+                print(f"\r[+] Monitor Users Instagram | Attempts {self.attempts} | Get {self.successfully} | ERROR {self.error}", end='')
                 self.discord.Send(username)
                 self.save_target(username)
                 self.delete_target(username)
